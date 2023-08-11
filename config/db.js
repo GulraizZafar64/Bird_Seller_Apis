@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 
-const uri="mongodb+srv://abdulrafay9797:Eueu_6464@netflix.2a03rl4.mongodb.net/?retryWrites=true&w=majority"
+const uri="mongodb+srv://abdulrafay9797:Eueu_6464@cluster0.z1ygb2e.mongodb.net/?retryWrites=true&w=majority"
 const connectDatabase=( )=>{
     mongoose.set("strictQuery", false);
     mongoose.connect(uri,{useUnifiedTopology:true,

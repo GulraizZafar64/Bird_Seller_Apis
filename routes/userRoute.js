@@ -6,8 +6,5 @@ router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 router.route("/logout").get(logout)
 router.route("/me").get(isAuthenticatedUser,getUserDetails)
-router.route("/likeDislike").post(isAuthenticatedUser,likeDislikeThePost)
-router.route("/dislikeThePost").post(isAuthenticatedUser,dislikeThePost)
-router.route("/addListing").post(isAuthenticatedUser,addListing)
 
 module.exports=router

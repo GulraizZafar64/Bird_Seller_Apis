@@ -18,21 +18,6 @@ const userSchema=new mongoose.Schema({
        minlength:[8,"the passsword must b 8 characters"],
        select:false
    },
-   likes:[
-    {
-        poster_path:String
-    }
-   ],
-   dislikes:[
-    {
-        poster_path:String
-    }
-   ],
-   listing:[
-    {
-        poster_path:String
-    }
-   ],
    createdAt:{
       type:Date,
       default:Date.now()

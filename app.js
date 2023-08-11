@@ -20,7 +20,9 @@ app.use(cors());
 //routs imports
 
 const user=require("./routes/userRoute")
+const category=require("./routes/categoriesRoutes")
 app.use("/api/v1",user)
+app.use("/api/v1",category)
 
 //middleware for error
 app.use(errorMiddleware)
