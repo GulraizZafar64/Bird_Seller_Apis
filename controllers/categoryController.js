@@ -9,15 +9,23 @@ exports.getAllCategories = async (req, res) => {
   }
 };
 
-exports.createCategory = async (req, res) => {
+exports.createCategory = async (req, res,next) => {
+  const existingCategory = await Category.findOne({ name: req.body.name });
+  if (existingCategory) {
+    return res.status(200).json({success:false, message: 'Category name already taken' });
+  }
   const category = new Category({
     name: req.body.name,
   });
   try {
     const newCategory = await category.save();
-    res.status(200).json(newCategory);
+    res.status(200).json({
+      success:true,
+      message:"Created Successfully",
+      data:newCategory
+    });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({success:false, message: err.message });
   }
 };
 exports.updateCategory = async (req, res) => {
@@ -27,22 +35,26 @@ exports.updateCategory = async (req, res) => {
         { $set: { name: req.body.name } },
         { new: true }
       );
-      res.json(category);
+      res.status(200).json({
+        success:true,
+        message:"Updated Successfully",
+        data:category
+      });
     } catch (err) {
-      res.status(400).json({ message: err.message });
+      res.status(400).json({success:false, message: err.message });
     }
   };
   exports.deleteCategory = async (req, res) => {
     try {
       const category = await Category.findById(req.params.id);
       if (!category) {
-        return res.status(404).json({ message: 'Category not found' });
+        return res.status(200).json({success:false, message: 'Category not found' });
       }
       await Subcategory.deleteMany({ category: req.params.id });
       await category.remove();
   
-      res.json({ message: 'Category deleted' });
+      res.json({success:true, message: 'Category deleted' });
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      res.status(500).json({success:false, message: err.message });
     }
   };
