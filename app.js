@@ -25,8 +25,10 @@ app.use(fileUpload())
 
 const user=require("./routes/userRoute")
 const category=require("./routes/categoriesRoutes")
+const product=require("./routes/productRoutes")
 app.use("/api/v1",user)
 app.use("/api/v1",category)
+app.use("/api/v1",product)
 
 //middleware for error
 app.use(errorMiddleware)

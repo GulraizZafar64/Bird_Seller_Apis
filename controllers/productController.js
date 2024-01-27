@@ -1,12 +1,10 @@
-const Product=require("../models/productModel")
+const Product=require("../models/ProductModal")
 const catchAsyncError=require('../middleware/catchAsyncError')
 const cloudinary=require("cloudinary")
 
 ///create Product--admin
 
 exports.createProduct=async (req,res,next)=>{
-//ya neacha haa k agr user na ak he image di toh ussa images wali array ma push krdo agr zada haa toh images wali array ko wasa he req.body k equal krdiya usma push hojaya gi
-
 try {
   let images = [];
 
@@ -36,14 +34,25 @@ try {
         product
     })
 } catch (error) {
+
+  res.status(400).json({
+    success:false,
+    message:"Something wents wronge"
+})
    console.log(error)
 }
   }
-//get all products
-
 
 exports.getAdminProducts=async (req,res)=>{
- const products=await Product.find()
+  const products = await Product.find()
+  .populate({
+    path: 'subcategory',
+    populate: {
+      path: 'category',
+      model: 'Category',
+    },
+  })
+  .exec();
 
   res.status(201).json({
    success:true,
